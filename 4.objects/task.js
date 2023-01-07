@@ -10,7 +10,7 @@ Student.prototype.setSubject = function (subjectName) {
 }
 
 Student.prototype.addMarks = function (...marks) {
-    if (Student.hasOwnProperty('excluded') === true) {
+    if (this.hasOwnProperty('marks') === false) {
         return;
     }
     if (this.marks !== undefined) {
