@@ -67,8 +67,8 @@ class DetectiveBook extends Book {
 // Задача 2
 
 class Library {
-    constructor(name) {
-        this.name = name;
+    constructor(libraryName) {
+        this.name = libraryName;
         this.books = [];
     }
 
@@ -79,23 +79,17 @@ class Library {
     }
 
     findBookBy(type, value) {
-        for(let i = 0; i < this.books.lenght; i++) {
-            if(this.books[i][type] === value) {
-                return this.books[i];
-            } else {
-                return null;
-            }
-        }
+        return this.books.find(book => book[type] === value);
     }
 
     giveBookByName(bookName) {
-        for(let i = 0; i < this.books.lenght; i++) {
-            if(this.books[i].name === bookName) {
-                this.books.splice[i];
-                return this.books[i];
-            } else {
-                return null;
-            }
+        const bookToGive = this.findBookBy('bookName', bookName);
+        if(bookToGive) {
+            const indexBookToGive = this.books.indexOf(bookToGive);
+            this.books.splice(indexBookToGive, 1);
+            return bookToGive
         }
+
+        return null;
     }
 }
