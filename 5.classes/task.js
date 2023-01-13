@@ -36,7 +36,7 @@ class Magazine extends PrintEditionItem {
 }
 
 class Book extends PrintEditionItem {
-    constructor(name, releaseDate, pagesCount, author) {
+    constructor(author, name, releaseDate, pagesCount) {
         super(name, releaseDate, pagesCount);
         this.author = author;
         this.type = "book";    
@@ -44,22 +44,22 @@ class Book extends PrintEditionItem {
 }
 
 class NovelBook extends Book {
-    constructor(name, releaseDate, pagesCount, author) {
-        super(name, releaseDate, pagesCount, author);
+    constructor(author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
         this.type = "novel";    
     }
 }
 
 class FantasticBook extends Book {
-    constructor(name, releaseDate, pagesCount, author) {
-        super(name, releaseDate, pagesCount, author);
+    constructor(author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
         this.type = "fantastic";    
     }
 }
 
 class DetectiveBook extends Book {
-    constructor(name, releaseDate, pagesCount, author) {
-        super(name, releaseDate, pagesCount, author);
+    constructor(author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
         this.type = "detective";    
     }
 }
@@ -79,17 +79,16 @@ class Library {
     }
 
     findBookBy(type, value) {
-        return this.books.find(book => book[type] === value);
+        return this.books.find(book => book[type] === value) || null;
     }
 
-    giveBookByName(bookName) {
-        const bookToGive = this.findBookBy('bookName', bookName);
+    giveBookByName(name) {
+        const bookToGive = this.findBookBy('name', name);
         if(bookToGive) {
             const indexBookToGive = this.books.indexOf(bookToGive);
             this.books.splice(indexBookToGive, 1);
             return bookToGive
         }
-
         return null;
     }
 }
