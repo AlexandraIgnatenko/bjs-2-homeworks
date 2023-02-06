@@ -26,7 +26,23 @@ function cachingDecoratorNew(func) {
 
 //Задача № 2
 function debounceDecoratorNew(func, delay) {
-    const sendSignal = (signalOrder, delay) => console.log("Сигнал отправлен", signalOrder, delay);
-    const upgradedSendSignal = debounceDecoratorNew(sendSignal, 2000);
-    
+    let timeout;
+    if (timeout === undefined) {
+            return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                console.log(func(...args));
+                timeoutId = null;
+            }, delay);
+        }
+    } 
+
+    function wrapper(...arg) {
+        wrapper.count.push(args);
+        return func(...args);
+      }
+      wrapper.count = 0;
+      wrapper.allCount = 0;
+      
+      return wrapper; 
 }
