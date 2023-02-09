@@ -24,25 +24,27 @@ function cachingDecoratorNew(func) {
     }
 }
 
-//Задача № 2
 function debounceDecoratorNew(func, delay) {
     let timeout;
-    if (timeout === undefined) {
-            return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                console.log(func(...args));
-                timeoutId = null;
-            }, delay);
-        }
-    } 
+    let timeoutId;
+  
+    function wrapper(...args) {
+      wrapper.allCount++;
 
-    function wrapper(...arg) {
-        wrapper.count.push(args);
-        return func(...args);
+      if (timeoutId !== undefined) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            func(...args);
+            wrapper.count++; 
+        }, delay);
+      } else {
+        wrapper.count = 1;
+        func(...args);
       }
-      wrapper.count = 0;
-      wrapper.allCount = 0;
-      
-      return wrapper; 
-}
+    }
+
+    wrapper.allCount = 0;
+    wrapper.count = 0;
+  
+    return wrapper;
+  }
